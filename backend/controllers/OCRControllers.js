@@ -106,7 +106,7 @@ module.exports.uploadIDCard = async (req, res) => {
           console.error(`[${CLASS_NAME}] uploadIDCard Error in file data`);
 
           res.status(400).send({
-            error: "Error in file",
+            error: "Error in file data",
           });
         }
       }
