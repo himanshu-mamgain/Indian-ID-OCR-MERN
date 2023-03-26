@@ -1,6 +1,12 @@
 const config = require("../config/config.json");
 
-module.exports.IDChecker = (idData, idType) => {
+/**
+ * Extract data from given data and format it 
+ * @param {string} idData
+ * @param {string} idType
+ * @returns json data
+ */
+module.exports.extractData = (idData, idType) => {
   try {
     let response;
 
@@ -24,8 +30,6 @@ module.exports.IDChecker = (idData, idType) => {
             dob: dateOfBirth[0],
           },
         };
-        break;
-      case "aadhaarCard":
         break;
     }
 

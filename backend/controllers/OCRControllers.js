@@ -3,7 +3,7 @@ const { createWorker } = require("tesseract.js");
 const fs = require("fs");
 const sharp = require("sharp");
 const config = require("../config/config.json");
-const { IDChecker } = require("../services/IDChecker");
+const { extractData } = require("../services/extractData");
 
 const CLASS_NAME = "OCRControllers";
 
@@ -138,7 +138,10 @@ module.exports.getIDCardImgDetails = async (req, res) => {
       // const idCardDetails = await Tesseract.recognize(idCardFile, "eng");
 
       if (idCardDetails) {
-        const response = IDChecker(idCardDetails.data.text.replace("\n", " - "), idType);
+        const response = extractData(
+          idCardDetails.data.text.replace("\n", " - "),
+          idType
+        );
 
         fs.unlink(`uploads/${fileName}`, (error) => {
           if (error) {
@@ -151,8 +154,7 @@ module.exports.getIDCardImgDetails = async (req, res) => {
 
         if (response) {
           res.status(200).send({
-            message: response,
-            data: idCardDetails.data.text.split("\n"),
+            response: response,
           });
         } else {
           res.status(400).send({
